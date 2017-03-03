@@ -62,6 +62,18 @@
 
           $this->assertEquals('Joseph', $result);
         }
+        function test_delete()
+        {
+          $store = new Store('Jimmy');
+          $store2 = new Store('Bata');
+
+          $store->save();
+          $store2->save();
+          $store->delete();
+          $all_stores= Store::getAll();
+
+          $this->assertEquals([$store2], $all_stores);
+        }
 
     }
 ?>
