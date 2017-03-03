@@ -37,8 +37,18 @@
           $result= Store::getAll();
 
           $this->assertEquals([$store2, $store3] , $result);
+        }
+        function test_find()
+        {
+          $store = new Store('Jimmy');
+          $store2 = new Store('Bata');
 
+          $store->save();
+          $store2->save();
 
+          $result= Store::findbyid($store->getId());
+
+          $this->assertEquals($store, $result);
         }
 
 

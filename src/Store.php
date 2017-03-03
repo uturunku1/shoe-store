@@ -50,6 +50,29 @@ Class Store
     {
       $GLOBALS['DB']->exec("DELETE FROM stores;");
     }
+    static function findbyid($input_id)
+    {
+      $found_store = null;
+      $stores = Store::getAll();
+      foreach ($stores as $store) {
+        if ($store->getId()==$input_id) {
+          $found_store= $store;
+        }
+      }
+      return $found_store;
+    }
+    // static function find($search_id)
+    //    {
+    //        $found_student = null;
+    //        $students = Student::getAll();
+    //        foreach($students as $student) {
+    //            $student_id = $student->getId();
+    //            if ($student_id == $search_id) {
+    //              $found_student = $student;
+    //            }
+    //        }
+    //        return $found_student;
+    //    }
 }
 
  ?>
