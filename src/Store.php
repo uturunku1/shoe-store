@@ -28,7 +28,28 @@ Class Store
       $this->id = (int)$id;
     }
 
-  
+    function save()
+    {
+      $GLOBALS['DB']->exec("INSERT INTO stores(name) VALUES('{$this->getName()}');");
+      $this->id = $GLOBALS['DB']->lastInsertId();
+    }
+    static function getAll()
+    {
+      $returned_stores= $GLOBALS['DB']->query("SELECT * FROM stores;");
+      $all_stores = array();
+      foreach ($returned_stores as $store) {
+        $name= $store['name'];
+        $id = $store['id'];
+        $new_store = new Store ($name, $id);
+        array_push($all_stores, $new_store);
+      }
+      return $all_stores;
+    }
+
+    static function deleteAll()
+    {
+      $GLOBALS['DB']->exec("DELETE FROM stores;");
+    }
 }
 
  ?>
