@@ -4,7 +4,7 @@
     * @backupStaticAttributes disabled
     */
     require_once "src/Store.php";
-    // require_once "src/Brand.php";
+    require_once "src/Brand.php";
     $server = 'mysql:host=localhost:8889;dbname=shoes_test';
     $username = 'root';
     $password = 'root';
@@ -14,7 +14,7 @@
         protected function tearDown()
         {
           Store::deleteAll();
-          // Brand::deleteAll();
+          Brand::deleteAll();
           // Store::deletefromJoinTable();
         }
         function test_Book_setters_getters_constructor()
@@ -73,6 +73,21 @@
           $all_stores= Store::getAll();
 
           $this->assertEquals([$store2], $all_stores);
+        }
+        
+        function test_addbrand_getbrands()
+        {
+          $store= new Store('Jimmy');
+          $brand = new Brand('Jimmy Choo');
+          $brand2 = new Brand('Louis Vuitton');
+          $store->save();
+          $brand->save();
+          $brand2->save();
+
+          $store->addbrand($brand);
+          $store->addbrand($brand2);
+
+          $this->assertEquals([$brand, $brand2], $store->getbrands());
         }
 
     }
