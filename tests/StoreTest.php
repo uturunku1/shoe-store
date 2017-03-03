@@ -17,7 +17,7 @@
           Brand::deleteAll();
           // Store::deletefromJoinTable();
         }
-        function test_Book_setters_getters_constructor()
+        function test_setters_getters_constructor()
         {
           $store= new Store ('Jimmy', 1);
           $result= $store->getName() . $store->getid();
@@ -74,7 +74,7 @@
 
           $this->assertEquals([$store2], $all_stores);
         }
-        
+
         function test_addbrand_getbrands()
         {
           $store= new Store('Jimmy');
