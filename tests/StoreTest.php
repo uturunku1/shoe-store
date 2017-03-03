@@ -50,7 +50,18 @@
 
           $this->assertEquals($store, $result);
         }
+        function test_update()
+        {
+          $store = new Store('Jimmy');
+          $new_name = 'Joseph';
+          $store->save();
 
+          $store->update($new_name);
+
+          $result= $store->getName();
+
+          $this->assertEquals('Joseph', $result);
+        }
 
     }
 ?>

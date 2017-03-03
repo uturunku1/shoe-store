@@ -61,18 +61,11 @@ Class Store
       }
       return $found_store;
     }
-    // static function find($search_id)
-    //    {
-    //        $found_student = null;
-    //        $students = Student::getAll();
-    //        foreach($students as $student) {
-    //            $student_id = $student->getId();
-    //            if ($student_id == $search_id) {
-    //              $found_student = $student;
-    //            }
-    //        }
-    //        return $found_student;
-    //    }
-}
+    function update($new_name)
+    {
+      $GLOBALS['DB']->exec("UPDATE stores SET name = '{$new_name}' WHERE id= {$this->getId()};");
+      $this->setName($new_name);
+    }
+  }
 
  ?>
