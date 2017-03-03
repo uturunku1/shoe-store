@@ -24,20 +24,20 @@
           $this->assertEquals('Jimmy Choo1', $result);
 
         }
-        // function test_save_getall_deleteall()
-        // {
-        //   $brand = new Store('Jimmy');
-        //   $store2 = new Store('Bata');
-        //   $store3 = new Store('Fabulous');
-        //   $store->save();
-        //   Store::deleteAll();
-        //   $store2->save();
-        //   $store3->save();
-        //
-        //   $result= Store::getAll();
-        //
-        //   $this->assertEquals([$store2, $store3] , $result);
-        // }
+        function test_save_getall_deleteall()
+        {
+          $brand = new Brand('Jimmy');
+          $brand2 = new Brand('Bata');
+          $brand3 = new Brand('Fabulous');
+          $brand->save();
+          Brand::deleteAll();
+          $brand2->save();
+          $brand3->save();
+
+          $result= Brand::getAll();
+
+          $this->assertEquals([$brand2, $brand3] , $result);
+        }
         // function test_find()
         // {
         //   $store = new Store('Jimmy');
