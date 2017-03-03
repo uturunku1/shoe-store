@@ -38,18 +38,18 @@
 
           $this->assertEquals([$brand2, $brand3] , $result);
         }
-        // function test_find()
-        // {
-        //   $store = new Store('Jimmy');
-        //   $store2 = new Store('Bata');
-        //
-        //   $store->save();
-        //   $store2->save();
-        //
-        //   $result= Store::findbyid($store->getId());
-        //
-        //   $this->assertEquals($store, $result);
-        // }
+        function test_find()
+        {
+          $brand = new Brand('Jimmy');
+          $brand2 = new Brand('Bata');
+
+          $brand->save();
+          $brand2->save();
+
+          $result= Brand::findbyid($brand->getId());
+
+          $this->assertEquals($brand, $result);
+        }
         // function test_update()
         // {
         //   $store = new Store('Jimmy');
