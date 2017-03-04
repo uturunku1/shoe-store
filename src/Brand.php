@@ -61,6 +61,11 @@ Class Brand
       }
       return $found_brand;
     }
+    function update($new_name)
+    {
+      $GLOBALS['DB']->exec("UPDATE brands SET name= '{$new_name}' WHERE id= {$this->getid()};");
+      $this->setName($new_name);
+    }
 
     // function update($new_name)
     // {

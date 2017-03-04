@@ -50,18 +50,18 @@
 
           $this->assertEquals($brand, $result);
         }
-        // function test_update()
-        // {
-        //   $store = new Store('Jimmy');
-        //   $new_name = 'Joseph';
-        //   $store->save();
-        //
-        //   $store->update($new_name);
-        //
-        //   $result= $store->getName();
-        //
-        //   $this->assertEquals('Joseph', $result);
-        // }
+        function test_update()
+        {
+          $brand = new Brand('Jimmy');
+          $new_name = 'Manolo';
+          $brand->save();
+
+          $brand->update($new_name);
+
+          $result= $brand->getName();
+
+          $this->assertEquals('Manolo', $result);
+        }
         // function test_delete()
         // {
         //   $store = new Store('Jimmy');
