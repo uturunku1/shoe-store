@@ -62,18 +62,18 @@
 
           $this->assertEquals('Manolo', $result);
         }
-        // function test_delete()
-        // {
-        //   $store = new Store('Jimmy');
-        //   $store2 = new Store('Bata');
-        //
-        //   $store->save();
-        //   $store2->save();
-        //   $store->delete();
-        //   $all_stores= Store::getAll();
-        //
-        //   $this->assertEquals([$store2], $all_stores);
-        // }
+        function test_delete()
+        {
+          $brand = new Brand('Jimmy');
+          $brand2 = new Brand('Bata');
+
+          $brand->save();
+          $brand2->save();
+          $brand->delete();
+          $all_brands= Brand::getAll();
+
+          $this->assertEquals([$brand2], $all_brands);
+        }
         // function test_addbrand()
         //
         // {
