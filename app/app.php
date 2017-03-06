@@ -11,8 +11,8 @@
     $DB = new PDO($server, $username, $password);
     $app = new Silex\Application();
     $app['debug'] = true;
-    use Symfony\Component\Debug\Debug;
-    Debug::enable();
+    // use Symfony\Component\Debug\Debug;
+    // Debug::enable();
 
     $app->register(
         new Silex\Provider\TwigServiceProvider(),
@@ -25,9 +25,8 @@
             array('stores' => Store::getAll(), 'edit_store_id' => 0));
     });
     $app->post('/post/store', function() use ($app){
-      $store= new Store ($_POST['name']);
+      $store= new Store (filter_var($_POST['name'], FILTER_SANITIZE_MAGIC_QUOTES));
       $store->save();
-      // var_dump(Store::getAll());
       return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0));
     });
     $app->get('/get/store/{id}/edit', function($id) use ($app){
@@ -43,14 +42,31 @@
       $store->delete();
       return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0));
     });
+    $app->post('/deleteall/store', function() use ($app){
+      Store::deleteAll();
+      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0));
+    });
     //brand routes:
-    $app->get('/brand', function() use($app){
-      return $app['twig']->render('brand.html.twig', array('brands'=>Brand::getAll(),'edit_brand_id'=>0));
+    $app->get('/brands/{id}', function($id) use($app){
+      $store= Store::findbyid($id);
+      return $app['twig']->render('brand.html.twig', array('stores'=>null,'store'=>$store,'brands'=>$store->getbrands()));
     });
-    $app->post('post/brand', function() use($app){
-      $new_brand= new Brand($_POST['name']);
+    $app->post('post/brand/{id}', function($id) use($app){
+      $new_brand= new Brand(filter_var($_POST['name'], FILTER_SANITIZE_MAGIC_QUOTES));
       $new_brand->save();
-      return $app['twig']->render('brand.html.twig', array('brands' => Brand::getAll(), 'edit_brand_id'=>0 ));
+      $store= Store::findbyid($id);
+      $new_brand->addstore($store);
+
+      $store->addbrand($new_brand);
+      $brands= $store->getbrands();
+      return $app['twig']->render('brand.html.twig', array('stores'=>null,'store'=>$store,'brands'=>$brands));
     });
+    $app->post('stores/{id}', function($id) use ($app){
+      $store= Store::findbyid($id);
+      $brand= Brand::findbyid($_POST['brand_id']);
+      $stores= $brand->getstores();
+      return $app['twig']->render('brand.html.twig', array('stores'=>$stores,'store'=>$store,'brands'=>$store->getbrands() ));
+    });
+
     return $app;
 ?>

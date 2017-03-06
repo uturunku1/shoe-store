@@ -58,7 +58,9 @@
                         </td>
                         </td>
                         <td>
-                          <a href="/brand">Check brands</a>
+                          <form action="/brands/{{store.getId}}" method="get">
+                            <button type="submit">Check brands</button>
+                          </form>
                         </td>
                     </tr>
                 {% endfor %}
