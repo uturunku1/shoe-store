@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block page %}
+
+    <h3>Add a brand of shoes to this store:</h3>
+
+    <form action='/post/brand' method='post'>
+        <div class='form-group'>
+            <label for='name'>Name</label>
+            <input required type='text' name='name' class='form-control'>
+        </div>
+        <button type='submit' class='btn btn-success'>Submit</button>
+    </form>
+
+    {%if brands is not empty%}
+    <table class="table">
+      <thead>
+        <th>Brand Name</th>
+        <th>Edit</th>
+        <th>Stores</th>
+      </thead>
+      <tbody>
+        {%for brand in brands%}
+        <tr>
+          {%if edit_brand_id== brand.getId%}
+          <form action="/patch/brand" method="post">
+            <input name="_method" value="patch" hidden>
+            <td><input type="text" name="new_name" value="{{brand.getName}}"></td>
+            <td><button type="submit">save</button></td>
+          </form>
+          {%else%}
+          <td>{{brand.getName}}</td>
+          <td><form action="/get/brand/{{brand.getId}}/edit" method="get">
+            <button type="submit" name="edit">edit</button>
+          </form></td>
+          {%endif%}
+          <td><form action="/post/stores{{brand.getId}}" method="post">
+            <button type="submit">show stores</button>
+          </form></td>
+
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+
+    {%endif%}
+  {% endblock %}

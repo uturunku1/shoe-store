@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block page %}
+
+    <h3>Add a new store in town:</h3>
+
+    <form action='/post/store' method='post'>
+        <div class='form-group'>
+            <label for='name'>Name</label>
+            <input required type='text' name='name' class='form-control'>
+        </div>
+        <button type='submit' class='btn btn-success'>Submit</button>
+    </form>
+
+    {% if stores is not empty %}
+        <h3>List of Stores</h3>
+        <br>
+
+        <table class="table">
+            <thead>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Remove</th>
+                <th>Brands</th>
+            </thead>
+
+            <tbody>
+                {% for store in stores %}
+                    <tr>
+
+                        {% if edit_store_id == store.getId %}
+                            <form action='/patch/store' method='post'>
+                                <input name='_method' value='patch' hidden>
+                                <input name='store_id' value = '{{ store.getId }}' hidden>
+                                <td>
+                                    <div class='form-group'>
+                                        <input required type='text' name='new_name' class='form-control' value='{{ store.getName }}'>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type='submit' class='btn btn-xs'>Save</button>
+                                </td>
+                            </form>
+                        {% else %}
+                            <td>{{ store.getName }}</td>
+                            <td>
+                                <form action='/get/store/{{ store.getId }}/edit' method='get'>
+                                    <button type='submit' class='btn btn-xs'>Edit</button>
+                                </form>
+                            </td>
+                        {% endif %}
+
+                        <td>
+                            <form action='/delete/store/{{ store.getId }}' method='post'>
+                                <input name='_method' value='delete' hidden>
+                                <button type='submit' class='btn btn-xs btn-success'>Remove</button>
+                            </form>
+                        </td>
+                        </td>
+                        <td>
+                          <a href="/brand">Check brands</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action='/deleteall/store' method='post'>
+            <button type='submit' class='btn btn-xs btn-danger'>Delete all stores</button>
+        </form>
+    {% endif %}
+{% endblock %}

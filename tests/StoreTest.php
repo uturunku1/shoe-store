@@ -35,7 +35,6 @@
           $store3->save();
 
           $result= Store::getAll();
-
           $this->assertEquals([$store2, $store3] , $result);
         }
         function test_find()

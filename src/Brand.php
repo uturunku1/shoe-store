@@ -11,41 +11,39 @@ Class Brand
       $this->setName($name);
       $this->setId($id);
     }
-
-    function getName(){
+    function setName($name)
+    {
+      $this->name = (string) $name;
+    }
+    function setId($id)
+    {
+      $this->id = (int) $id;
+    }
+    function getName()
+    {
       return $this->name;
     }
-
-    function setName($name){
-      $this->name = (string)$name;
-    }
-
-    function getId(){
+    function getId()
+    {
       return $this->id;
     }
-
-    function setId($id){
-      $this->id = (int)$id;
-    }
-
     function save()
     {
-      $GLOBALS['DB']->exec("INSERT INTO brands(name) VALUES('{$this->getName()}');");
-      $this->id = $GLOBALS['DB']->lastInsertId();
+      $GLOBALS['DB']->exec("INSERT INTO brands (name) VALUES ('{$this->getName()}');");
+      $this->setId($GLOBALS['DB']->lastInsertId());
     }
     static function getAll()
     {
       $returned_brands= $GLOBALS['DB']->query("SELECT * FROM brands;");
-      $all_brands = array();
-      foreach ($returned_brands as $brand) {
+      $brands = array();
+      foreach($returned_brands as $brand) {
         $name= $brand['name'];
         $id = $brand['id'];
-        $new_brand = new Brand ($name, $id);
-        array_push($all_brands, $new_brand);
+        $new_brand = new Brand($name, $id);
+        array_push($brands, $new_brand);
       }
-      return $all_brands;
+      return $brands;
     }
-
     static function deleteAll()
     {
       $GLOBALS['DB']->exec("DELETE FROM brands;");
