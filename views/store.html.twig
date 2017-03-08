@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block page %}
+    <h2><u>{{store.getName}}</u></h2>
+    <h3>Add a brand of shoes to this store:</h3>
+
+    <form action='/add_brands' method='post'>
+        <input id="store_id" name="store_id" type="hidden" value="{{ store.getId }}">
+        <label for="brand_id">Select a brand</label>
+        <select id='brand_id' name='brand_id' type='text'>
+          {% for brand in all_brands %}
+            <option value="{{ brand.getId }}"> {{ brand.getName }} </option>
+          {% endfor %}
+        </select>
+        <button type='submit'>Add brand</button>
+    </form>
+<br>
+<h3>Brands that this store sells:</h3>
+
+    {%if brands is not empty%}
+    <table class="table">
+      <thead>
+        <th>Brand Name</th>
+        <th>Delete</th>
+      </thead>
+      <tbody>
+        {%for brand in brands%}
+        <tr>
+          <td>{{brand.getName}}</td>
+          <td>
+              <form action='/delete/brand/{{ brand.getId }}' method='post'>
+                  <input name='_method' value='delete' hidden>
+                  <input id="store_id" name="store_id" type="hidden" value="{{ store.getId }}">
+                  <button type='submit' class='btn btn-xs btn-success'>Remove</button>
+              </form>
+          </td>
+
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+
+
+  {% endblock %}

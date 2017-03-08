@@ -1,44 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block page %}
-    <h2><u>{{store.getName}}</u></h2>
-    <h3>Add a brand of shoes to this store:</h3>
+    <h2><u>{{brand.getName}}</u></h2>
+    <h3>Add a store to this brand:</h3>
 
-    <form action='/post/brand/{{store.getId}}' method='post'>
-        <div class='form-group'>
-            <label for='name'>Name</label>
-            <input required type='text' name='name' class='form-control'>
-        </div>
-        <button type='submit' class='btn btn-success'>Submit</button>
+    <form action='/add_stores' method='post'>
+        <input id="brand_id" name="brand_id" type="hidden" value="{{ brand.getId }}">
+        <label for="store_id">Select a store</label>
+        <select id='store_id' name='store_id' type='text'>
+          {% for store in all_stores %}
+            <option value="{{ store.getId }}"> {{ store.getName }} </option>
+          {% endfor %}
+        </select>
+        <button type='submit'>Add store</button>
     </form>
-    {%if brands is not empty%}
+<br>
+
+    {%if stores is not empty%}
     <table class="table">
       <thead>
-        <th>Brand Name</th>
-        <th>Stores</th>
+        <th>Store Name</th>
+        <th>brands</th>
       </thead>
       <tbody>
-        {%for brand in brands%}
+        {%for store in stores%}
         <tr>
-          <td>{{brand.getName}}</td>
-          <td><form action="/stores/{{store.getId}}" method="post">
-            <input type="hidden" name="brand_id" value="{{brand.getId}}">
-            <button type="submit">show stores</button>
-          </form></td>
+          <td>{{store.getName}}</td>
+          <td>
+              <form action='/delete/storeinbrand/{{ store.getId }}' method='post'>
+                  <input name='_method' value='delete' hidden>
+                  <input id="brand_id" name="brand_id" type="hidden" value="{{ brand.getId }}">
+                  <button type='submit' class='btn btn-xs btn-success'>Remove</button>
+              </form>
+          </td>
 
         </tr>
         {%endfor%}
       </tbody>
     </table>
-    {%endif%}
-
-    {% if stores is not empty%}
-    <h3>Stores where this brand is sell:</h3>
-    {%for store in stores%}
-    <ul>
-      <li>{{store.getName}}</li>
-    </ul>
-    {%endfor%}
     {%endif%}
 
   {% endblock %}

@@ -13,7 +13,7 @@
     </form>
 
     {% if stores is not empty %}
-        <h3>List of Stores</h3>
+        <h3><u>List of Stores</u></h3>
         <br>
 
         <table class="table">
@@ -58,16 +58,41 @@
                         </td>
                         </td>
                         <td>
-                          <form action="/brands/{{store.getId}}" method="get">
-                            <button type="submit">Check brands</button>
-                          </form>
+                          <a href="/store/{{ store.getId }}">add/show brands for this store</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <form action='/deleteall/store' method='post'>
-            <button type='submit' class='btn btn-xs btn-danger'>Delete all stores</button>
-        </form>
     {% endif %}
+    <form action='/deleteall/store' method='post'>
+    <button type='submit' class='btn btn-xs btn-danger'>Delete all stores</button>
+    </form>
+
+    <h3>Add a new brand:</h3>
+
+    <form action='/post/brand' method='post'>
+    <div class='form-group'>
+    <label for='name'>Name</label>
+    <input required type='text' name='name' class='form-control'>
+    </div>
+    <button type='submit' class='btn btn-success'>Submit</button>
+    </form>
+    {%if brands is not empty%}
+    <h3><u>List of brands</u></h3>
+    <table class="table">
+      <thead>
+        <th>Brand Name</th>
+        <th>Stores</th>
+      </thead>
+      <tbody>
+        {%for brand in brands%}
+        <tr>
+          <td>{{brand.getName}}</td>
+          <td><a href="/brand/{{brand.getId }}">add/show stores for this brand</a></td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
 {% endblock %}
