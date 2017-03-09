@@ -27,24 +27,28 @@
     $app->post('/post/store', function() use ($app){
       $store= new Store (filter_var($_POST['name'], FILTER_SANITIZE_MAGIC_QUOTES));
       $store->save();
-      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
+      return $app->redirect('/');
+      // return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
     });
-    $app->get('/get/store/{id}/edit', function($id) use ($app){
+    $app->get('/get/{id}', function($id) use ($app){
       return $app['twig']->render('index.html.twig', array('stores'=>Store::getAll(),'edit_store_id'=>$id, 'brands'=>Brand::getAll()));
     });
     $app->patch('/patch/store', function() use ($app){
       $store= Store::findbyid($_POST['store_id']);
       $store->update($_POST['new_name']);
-      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
+      return $app->redirect('/');
+      // return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
     });
     $app->delete('/delete/store/{id}', function($id) use ($app){
       $store= Store::findbyid($id);
       $store->delete();
-      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
+      return $app->redirect('/');
+      // return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
     });
     $app->post('/deleteall/store', function() use ($app){
       Store::deleteAll();
-      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
+      return $app->redirect('/');
+      // return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
     });
     $app->get("/store/{id}", function($id) use ($app) {
         $store = Store::findbyid($id);
@@ -56,7 +60,8 @@
     $app->post('/post/brand', function() use ($app){
       $brand= new Brand (filter_var($_POST['name'], FILTER_SANITIZE_MAGIC_QUOTES));
       $brand->save();
-      return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
+      return $app->redirect('/');
+      // return $app['twig']->render('index.html.twig',array('stores' => Store::getAll(), 'edit_store_id' => 0, 'brands'=>Brand::getAll()));
     });
     $app->post("/add_brands", function() use ($app) {
       $store = Store::findbyid($_POST['store_id']);
